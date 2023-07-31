@@ -13592,6 +13592,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1423065912}
   m_CullTransparentMesh: 1
+--- !u!1 &1438337951
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1438337953}
+  - component: {fileID: 1438337952}
+  m_Layer: 7
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1438337952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438337951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: a6560a915ef98420e9faacc1c7438823, type: 2}
+--- !u!4 &1438337953
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438337951}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.160629, y: -1.8409793, z: -16.355171}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 27
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1443837539
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19612,7 +19661,12 @@ PrefabInstance:
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 228b9e035288f6d43a2241ad21ec57a4, type: 2}
+      objectReference: {fileID: 2100000, guid: e76bbe1796aa4894fa850e7cd988266f, type: 2}
+    - target: {fileID: 1862653554092002109, guid: 5ce828b286cbfad4898f09488d8ececf,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e76bbe1796aa4894fa850e7cd988266f, type: 2}
     - target: {fileID: 1862653554092002109, guid: 5ce828b286cbfad4898f09488d8ececf,
         type: 3}
       propertyPath: 'm_Materials.Array.data[2]'
@@ -19621,7 +19675,7 @@ PrefabInstance:
     - target: {fileID: 2920940243822643267, guid: 5ce828b286cbfad4898f09488d8ececf,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3339105254199890770, guid: 5ce828b286cbfad4898f09488d8ececf,
         type: 3}
@@ -19738,6 +19792,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4285228438662731384, guid: 5ce828b286cbfad4898f09488d8ececf,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e76bbe1796aa4894fa850e7cd988266f, type: 2}
     - target: {fileID: 4442919550666670806, guid: 5ce828b286cbfad4898f09488d8ececf,
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -19836,7 +19895,7 @@ PrefabInstance:
     - target: {fileID: 6446675290229892710, guid: 5ce828b286cbfad4898f09488d8ececf,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6459536914562971355, guid: 5ce828b286cbfad4898f09488d8ececf,
         type: 3}
@@ -19856,6 +19915,11 @@ PrefabInstance:
     - target: {fileID: 6682603134943346251, guid: 5ce828b286cbfad4898f09488d8ececf,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6934012992453869090, guid: 5ce828b286cbfad4898f09488d8ececf,
+        type: 3}
+      propertyPath: m_RenderPostProcessing
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7655855087754605631, guid: 5ce828b286cbfad4898f09488d8ececf,

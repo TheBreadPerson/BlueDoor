@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 389eea92e5738614299167d629a950ef, type: 3}
+  m_Name: Ak47
+  m_EditorClassIdentifier: 
+  gunClip: {fileID: 8300000, guid: d93beee01b9ed4a4fbb8c4056dd5fd5c, type: 3}
+  reloadSound: {fileID: 8300000, guid: 27a9cc6203bfc8e4887472f046dd3dab, type: 3}
+  fireRate: 0.1
+  gunDamage: 4
+  knockback: 5
+  ammo: 35
+  range: 55
+  gunFalloff: 20
+  reloadTime: 3
+  sprayRays: 0
+  sprayStrength: 0
+  weight: 1
+  mags: 5
+  automatic: 1
+  canADS: 1
+  Recoil: {x: 20, y: 20, z: 15}
+  AimRecoil: {x: 8, y: 5, z: 5}
+  hasSpread: 0

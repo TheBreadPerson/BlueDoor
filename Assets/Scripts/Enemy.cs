@@ -36,6 +36,8 @@ public class Enemy : MonoBehaviour
     float shotDamage, Health, shotCooldown;
     public LayerMask playerLayer;
     public Transform player;
+    public GameObject ammoPickup, healthPickup;
+    public float ammoOdds, healthOdds;
     // Start is called before the first frame update
     void Start()
     {
@@ -160,11 +162,28 @@ public class Enemy : MonoBehaviour
         Health -= dmg;
     }
 
+    public void DropPickups()
+    {
+        int ammoRandom = Random.Range(0, 100);
+        int healthRandom = Random.Range(0, 100);
+        if(ammoRandom <= ammoOdds)
+        {
+            Instantiate(ammoPickup, transform.position, Quaternion.identity);
+            ammoPickup.GetComponent<Pickup>().magsGained = 2f;
+        }
+        if(healthRandom <= healthOdds)
+        {
+            Instantiate(healthPickup, transform.position, Quaternion.identity);
+            healthPickup.GetComponent<Pickup>().healthAmount = 5f;
+        }
+        
+    }
     public void Death()
     {
         if (!isDead) enemyJump.enemiesKilled++;
         if(enemyGun != null && !seperatedGun)
         {
+            DropPickups();
             enemyGun.gameObject.AddComponent<MeshCollider>().convex = true;
             enemyGun.gameObject.AddComponent<Rigidbody>().AddForce(Vector3.up * 5f, ForceMode.Impulse);
             enemyGun.parent = null;

@@ -18,7 +18,7 @@ MonoBehaviour:
   gunDamage: 8
   knockback: 4
   ammo: 2
-  range: 15
+  range: 30
   gunFalloff: 2
   reloadTime: 3
   sprayRays: 5

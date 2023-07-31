@@ -70,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
     [Space]
     public Slider healthSlider;
     public Transform orientation;
+    [HideInInspector] public float playerHealth;
     public float Health;
     public GameObject deathScreen;
     float horizontal, vertical;
@@ -106,6 +107,7 @@ public class PlayerMovement : MonoBehaviour
         Time.timeScale = 1f;
         startYScale = transform.localScale.y;
         gun = guns[0].GetComponentInChildren<Gun>();
+        playerHealth = Health;
     }
 
     // Update is called once per frame
@@ -114,14 +116,14 @@ public class PlayerMovement : MonoBehaviour
         // WEAPON SWITCHED
         StartCoroutine(GunRustle());
         
-        healthSlider.value = Health;
+        healthSlider.value = playerHealth;
         if(wallrunning)
         {
             state = MovementState.wallrunning;
             MoveSpeed = wallrunSpeed - gun.gunWeight;
         }
 
-        if(Health <= 0f)
+        if(playerHealth <= 0f)
         {
             Death();
         }
@@ -375,7 +377,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Damage(float amt)
     {
-        Health -= amt;
+        playerHealth -= amt;
 
         if (grunt.Length > 0)
         {

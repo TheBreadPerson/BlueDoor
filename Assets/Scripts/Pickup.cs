@@ -8,6 +8,7 @@ public class Pickup : MonoBehaviour
     public AudioClip clip;
     public bool AmmoP;
     public bool HealthP;
+    public float magsGained = 5f;
     public float healthAmount = 10f;
 
 
@@ -19,14 +20,13 @@ public class Pickup : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            other.GetComponent<AudioSource>().PlayOneShot(clip);
+            
             if (AmmoP)
             {
                 Ammo(other);
             }
             if(HealthP)
             {
-                source.Play();
                 Health(other);
             }
         }
@@ -36,7 +36,8 @@ public class Pickup : MonoBehaviour
     {
         if (other.GetComponentInParent<PlayerMovement>().gun != null)
         {
-            other.GetComponentInParent<PlayerMovement>().gun.currentMags += 5;
+            other.GetComponent<AudioSource>().PlayOneShot(clip);
+            other.GetComponentInParent<PlayerMovement>().gun.currentMags += magsGained;
             Destroy(gameObject);
         }
     }
@@ -45,8 +46,12 @@ public class Pickup : MonoBehaviour
     {
         if (other.GetComponentInParent<PlayerMovement>() != null)
         {
-            other.GetComponentInParent<PlayerMovement>().Health += healthAmount;
-            Destroy(gameObject);
+            if (other.GetComponentInParent<PlayerMovement>().playerHealth < other.GetComponentInParent<PlayerMovement>().Health)
+            {
+                other.GetComponent<AudioSource>().PlayOneShot(clip);
+                other.GetComponentInParent<PlayerMovement>().playerHealth += healthAmount;
+                Destroy(gameObject);
+            }
         }
     }
 }

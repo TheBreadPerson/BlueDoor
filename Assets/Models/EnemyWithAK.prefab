@@ -140,6 +140,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 251
   player: {fileID: 0}
+  ammoPickup: {fileID: 1121683900397418483, guid: 38f1e5fc86299a8428148017ad2d68a1,
+    type: 3}
+  healthPickup: {fileID: 3666149460955854385, guid: 65599857fd660ef42b05649d13afb9b1,
+    type: 3}
+  ammoOdds: 40
+  healthOdds: 15
 --- !u!195 &5398577077306051939
 NavMeshAgent:
   m_ObjectHideFlags: 0

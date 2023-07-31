@@ -27,6 +27,6 @@ MonoBehaviour:
   mags: 5
   automatic: 1
   canADS: 1
-  Recoil: {x: 20, y: 20, z: 15}
+  Recoil: {x: 35, y: 35, z: 20}
   AimRecoil: {x: 8, y: 5, z: 5}
   hasSpread: 0

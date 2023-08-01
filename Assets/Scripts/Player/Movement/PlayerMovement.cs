@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     float timer;
     [Header("Movement")]
     [Space]
+    Sliding slidingS;
     public GameObject Cam;
     bool canJump;
     public float acceleration;
@@ -28,7 +29,6 @@ public class PlayerMovement : MonoBehaviour
     public float footstepFrequency;
     public AudioSource footstepSource;
     public float wallrunSpeed;
-
     public float groundDrag;
     public float standingDrag;
 
@@ -126,6 +126,7 @@ public class PlayerMovement : MonoBehaviour
         playerHealth = Health;
         currentCamFov = Cam.GetComponent<Camera>().fieldOfView;
         dashFov = currentCamFov += 20f;
+        slidingS = GetComponent<Sliding>();
     }
 
     // Update is called once per frame
@@ -310,7 +311,7 @@ public class PlayerMovement : MonoBehaviour
             MoveSpeed = sprintSpeed - gun.gunWeight;
         }
 
-        else if (crouching)
+        else if (crouching && !slidingS.isSliding)
         {
             state = MovementState.crouching;
             MoveSpeed = crouchSpeed - gun.gunWeight;
@@ -341,7 +342,7 @@ public class PlayerMovement : MonoBehaviour
                 rb.AddForce(Vector3.down * 80f, ForceMode.Force);
             }
         }
-        if(isGrounded)
+        if(isGrounded && !slidingS.isSliding)
             rb.AddForce(MoveDirection.normalized * MoveSpeed * (10f), ForceMode.Force);
         else
             rb.AddForce(MoveDirection.normalized * MoveSpeed * (10f) * airMultiplier, ForceMode.Force);
@@ -358,9 +359,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if(OnSlope() && !exitingSlope)
         {
-            if(rb.velocity.magnitude > MoveSpeed)
+            if(rb.velocity.magnitude > velocityCap)
             {
-                rb.velocity = rb.velocity.normalized * MoveSpeed;
+                rb.velocity = rb.velocity.normalized * velocityCap;
             }
         }
 
@@ -419,7 +420,7 @@ public class PlayerMovement : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
     }
 
-    bool OnSlope()
+    public bool OnSlope()
     {
         if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
         {

@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     Sliding slidingS;
     public GameObject Cam;
     bool canJump;
+    public bool sliding;
     public float acceleration;
     public float velocityCap;
     private float MoveSpeed;
@@ -311,7 +312,7 @@ public class PlayerMovement : MonoBehaviour
             MoveSpeed = sprintSpeed - gun.gunWeight;
         }
 
-        else if (crouching && !slidingS.isSliding)
+        else if (crouching && !sliding)
         {
             state = MovementState.crouching;
             MoveSpeed = crouchSpeed - gun.gunWeight;
@@ -335,17 +336,22 @@ public class PlayerMovement : MonoBehaviour
 
         if(OnSlope() && !exitingSlope)
         {
-            rb.AddForce(GetSlopeMoveDirection() * MoveSpeed * 10f, ForceMode.Force);
+            rb.AddForce(GetSlopeMoveDirection(MoveDirection) * MoveSpeed * 10f, ForceMode.Force);
 
             if(rb.velocity.y > 0f)
             {
                 rb.AddForce(Vector3.down * 80f, ForceMode.Force);
             }
         }
-        if(isGrounded && !slidingS.isSliding)
+        if (isGrounded)
+        {
             rb.AddForce(MoveDirection.normalized * MoveSpeed * (10f), ForceMode.Force);
+        }
         else
+        {
             rb.AddForce(MoveDirection.normalized * MoveSpeed * (10f) * airMultiplier, ForceMode.Force);
+        }
+            
 
         if(!wallrunning) rb.useGravity = !OnSlope();
 
@@ -431,9 +437,9 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
 
-    Vector3 GetSlopeMoveDirection()
+    public Vector3 GetSlopeMoveDirection(Vector3 direction)
     {
-        return Vector3.ProjectOnPlane(MoveDirection, slopeHit.normal).normalized;
+        return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
     }
 
     public void Damage(float amt)

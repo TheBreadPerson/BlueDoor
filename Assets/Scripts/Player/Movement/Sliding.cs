@@ -1,94 +1,91 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Sliding : MonoBehaviour
 {
-    float slideF;
-    float counterForce;
-    public Rigidbody rb;
-    float normalDrag;
-    float dragSet;
-    public bool isSliding;
-    public float slidingDrag;
-    public float slopeDrag;
-    public float slidingForce;
-    public float slideFalloff;
-    public float velocityToSlide;
-    public float velocityToStop;
-    public PlayerMovement pm;
+    [Header("References")]
+    public Transform orientation;
+    public Transform playerObj;
+    private Rigidbody rb;
+    private PlayerMovement pm;
 
-    // Start is called before the first frame update
-    void Start()
+    [Header("Sliding")]
+    public float maxSlideTime;
+    public float slideForce;
+    private float slideTimer;
+
+    public float slideYScale;
+    private float startYScale;
+
+    [Header("Input")]
+    public KeyCode slideKey = KeyCode.LeftControl;
+    private float horizontalInput;
+    private float verticalInput;
+
+
+    private void Start()
     {
-        counterForce = 0f;
-        normalDrag = pm.groundDrag;
+        rb = GetComponent<Rigidbody>();
+        pm = GetComponent<PlayerMovement>();
+
+        startYScale = playerObj.localScale.y;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        Debug.Log(isSliding);
-        if(pm.OnSlope())
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
+
+        if (Input.GetKeyDown(slideKey) && (horizontalInput != 0 || verticalInput != 0))
+            StartSlide();
+
+        if (Input.GetKeyUp(slideKey) && pm.sliding)
+            StopSlide();
+    }
+
+    private void FixedUpdate()
+    {
+        if (pm.sliding)
+            SlidingMovement();
+    }
+
+    private void StartSlide()
+    {
+        pm.sliding = true;
+
+        playerObj.localScale = new Vector3(playerObj.localScale.x, slideYScale, playerObj.localScale.z);
+        rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+
+        slideTimer = maxSlideTime;
+    }
+
+    private void SlidingMovement()
+    {
+        Vector3 inputDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+
+        // sliding normal
+        if(!pm.OnSlope() || rb.velocity.y > -0.1f)
         {
-            dragSet = slopeDrag;
+            rb.AddForce(inputDirection.normalized * slideForce, ForceMode.Force);
+
+            slideTimer -= Time.deltaTime;
         }
+
+        // sliding down a slope
         else
         {
-            dragSet = slidingDrag;
+            rb.AddForce(pm.GetSlopeMoveDirection(inputDirection) * slideForce, ForceMode.Force);
         }
 
-        if(rb.velocity.magnitude > velocityToSlide)
-        {
-            if(pm.crouching && pm.isGrounded)
-            {
-                StartSliding();
-            }
-        }
-
-        if(rb.velocity.magnitude != 0f && pm.OnSlope() && pm.crouching)
-        {
-            StartSliding();
-        }
-
-        if(((rb.velocity.magnitude < velocityToStop) || !pm.crouching || !pm.isGrounded) && isSliding)
-        {
+        if (slideTimer <= 0)
             StopSlide();
-        }
-
-        if(isSliding)
-        {
-            SlideMovement();
-        }
     }
 
-    void StartSliding()
+    private void StopSlide()
     {
-        pm.groundDrag = dragSet;
-        isSliding = true;
-        slideF = slidingForce;
-    }
+        pm.sliding = false;
 
-    void SlideMovement()
-    {
-        CounterSlide();
-        rb.AddForce(pm.orientation.forward * slideF, ForceMode.Force);
-        rb.AddForce(-transform.up * 10f, ForceMode.Force);
-        Debug.Log(slideF);
-    }
-
-    void CounterSlide()
-    {
-        rb.AddForce(-pm.orientation.forward * counterForce, ForceMode.Force);
-        counterForce += Time.deltaTime * slideFalloff;
-    }
-
-    void StopSlide()
-    {
-        counterForce = 0f;
-        slideF = slidingForce;
-        pm.groundDrag = normalDrag;
-        isSliding = false;
+        playerObj.localScale = new Vector3(playerObj.localScale.x, startYScale, playerObj.localScale.z);
     }
 }

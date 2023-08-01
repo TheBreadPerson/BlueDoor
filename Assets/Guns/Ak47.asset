@@ -19,7 +19,7 @@ MonoBehaviour:
   knockback: 5
   ammo: 35
   range: 100
-  gunFalloff: 20
+  gunFalloff: 85
   reloadTime: 3
   sprayRays: 0
   sprayStrength: 0

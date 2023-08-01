@@ -12,8 +12,10 @@ public class PlayerMovement : MonoBehaviour
     float timer;
     [Header("Movement")]
     [Space]
+    Sliding slidingS;
     public GameObject Cam;
     bool canJump;
+    public bool sliding;
     public float acceleration;
     public float velocityCap;
     private float MoveSpeed;
@@ -28,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
     public float footstepFrequency;
     public AudioSource footstepSource;
     public float wallrunSpeed;
-
     public float groundDrag;
     public float standingDrag;
 
@@ -126,6 +127,7 @@ public class PlayerMovement : MonoBehaviour
         playerHealth = Health;
         currentCamFov = Cam.GetComponent<Camera>().fieldOfView;
         dashFov = currentCamFov += 20f;
+        slidingS = GetComponent<Sliding>();
     }
 
     // Update is called once per frame
@@ -310,7 +312,7 @@ public class PlayerMovement : MonoBehaviour
             MoveSpeed = sprintSpeed - gun.gunWeight;
         }
 
-        else if (crouching)
+        else if (crouching && !sliding)
         {
             state = MovementState.crouching;
             MoveSpeed = crouchSpeed - gun.gunWeight;
@@ -334,17 +336,22 @@ public class PlayerMovement : MonoBehaviour
 
         if(OnSlope() && !exitingSlope)
         {
-            rb.AddForce(GetSlopeMoveDirection() * MoveSpeed * 10f, ForceMode.Force);
+            rb.AddForce(GetSlopeMoveDirection(MoveDirection) * MoveSpeed * 10f, ForceMode.Force);
 
             if(rb.velocity.y > 0f)
             {
                 rb.AddForce(Vector3.down * 80f, ForceMode.Force);
             }
         }
-        if(isGrounded)
+        if (isGrounded)
+        {
             rb.AddForce(MoveDirection.normalized * MoveSpeed * (10f), ForceMode.Force);
+        }
         else
+        {
             rb.AddForce(MoveDirection.normalized * MoveSpeed * (10f) * airMultiplier, ForceMode.Force);
+        }
+            
 
         if(!wallrunning) rb.useGravity = !OnSlope();
 
@@ -358,9 +365,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if(OnSlope() && !exitingSlope)
         {
-            if(rb.velocity.magnitude > MoveSpeed)
+            if(rb.velocity.magnitude > velocityCap)
             {
-                rb.velocity = rb.velocity.normalized * MoveSpeed;
+                rb.velocity = rb.velocity.normalized * velocityCap;
             }
         }
 
@@ -419,7 +426,7 @@ public class PlayerMovement : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
     }
 
-    bool OnSlope()
+    public bool OnSlope()
     {
         if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
         {
@@ -430,9 +437,9 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
 
-    Vector3 GetSlopeMoveDirection()
+    public Vector3 GetSlopeMoveDirection(Vector3 direction)
     {
-        return Vector3.ProjectOnPlane(MoveDirection, slopeHit.normal).normalized;
+        return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
     }
 
     public void Damage(float amt)

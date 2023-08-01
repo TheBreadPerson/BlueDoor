@@ -109,7 +109,8 @@ public class PlayerMovement : MonoBehaviour
         sprinting,
         air,
         wallrunning,
-        crouching
+        crouching,
+        sliding
     }
 
     public bool wallrunning;
@@ -306,6 +307,11 @@ public class PlayerMovement : MonoBehaviour
 
     void StateHandler()
     {
+        if(sliding)
+        {
+            state = MovementState.sliding;
+        }
+
         if(isGrounded && Input.GetKey(sprintKey))
         {
             state = MovementState.sprinting;

@@ -100,9 +100,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemies:
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   needsAllKilled: 1
   nextSceneName: Menu
 --- !u!65 &4932696046365337612

@@ -4860,6 +4860,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1221764129}
   m_CullTransparentMesh: 1
+--- !u!114 &1223479542 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3890194928702885745, guid: 8cb8c560938f0ed4bb0966587141a3c4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1652464742}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e6972ef07d080c4da27af816dbce5bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1227045584
 GameObject:
   m_ObjectHideFlags: 0
@@ -13946,6 +13958,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TheBlueDoor
       objectReference: {fileID: 0}
+    - target: {fileID: 7023649997557275952, guid: df1898c27dcf34c4395e69806fe01abb,
+        type: 3}
+      propertyPath: 'enemies.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1223479542}
     - target: {fileID: 8949406214967235760, guid: df1898c27dcf34c4395e69806fe01abb,
         type: 3}
       propertyPath: m_RootOrder

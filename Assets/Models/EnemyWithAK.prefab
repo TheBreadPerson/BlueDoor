@@ -144,8 +144,8 @@ MonoBehaviour:
     type: 3}
   healthPickup: {fileID: 3666149460955854385, guid: 65599857fd660ef42b05649d13afb9b1,
     type: 3}
-  ammoOdds: 40
-  healthOdds: 15
+  ammoOdds: 100
+  healthOdds: 100
 --- !u!195 &5398577077306051939
 NavMeshAgent:
   m_ObjectHideFlags: 0

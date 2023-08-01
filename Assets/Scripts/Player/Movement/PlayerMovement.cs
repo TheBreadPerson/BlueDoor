@@ -413,7 +413,7 @@ public class PlayerMovement : MonoBehaviour
     {
         
         Cam.GetComponent<CameraMove>().DoFov(dashFov);
-        rb.AddForce(orientation.forward * dashForce, ForceMode.Impulse);
+        rb.AddForce(MoveDirection.normalized * dashForce, ForceMode.Impulse);
         if(dashTimer < dashDuration)
         {
             dashTimer += Time.deltaTime;

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunClip: {fileID: 8300000, guid: e714c242974a2574bbb541326907dd5f, type: 3}
   reloadSound: {fileID: 8300000, guid: abc77a97c4039a34798ab5f5a707d30b, type: 3}
-  fireRate: 0
+  fireRate: 0.08
   gunDamage: 8
   knockback: 5
   ammo: 11

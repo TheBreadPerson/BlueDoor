@@ -429,20 +429,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gun: {fileID: 0}
-  airVelocityCap: 15
+  acceleration: 1
+  velocityCap: 15
   crouchSpeed: 4
-  walkSpeed: 7
-  sprintSpeed: 10
+  walkSpeed: 12
+  sprintSpeed: 12
+  coyoteTime: 0.25
   crouchHeight: 0.75
   footstep: {fileID: 8300000, guid: 4c1aa8735ac267d41aaeb22e4cdc466b, type: 3}
   footstepFrequency: 1
   footstepSource: {fileID: 9172891048424320486}
-  wallrunSpeed: 8.5
+  wallrunSpeed: 11
   groundDrag: 5
   standingDrag: 10
   jumpForce: 12
   jumpCooldown: 0.5
-  airMultiplier: 0.4
+  airMultiplier: 1
+  dashed: 0
+  dashKey: 304
+  dashForce: 8
+  dashDuration: 0.07
   slowKey: 101
   timeSlowMo: 0
   jumpKey: 32
@@ -465,6 +471,7 @@ MonoBehaviour:
   gunRustle: {fileID: 8300000, guid: 4a7fbfce2a101f04cbfda066e5072e9d, type: 3}
   healthSlider: {fileID: 0}
   orientation: {fileID: 8817143052397786411}
+  playerHealth: 0
   Health: 20
   deathScreen: {fileID: 0}
   grunt:
@@ -662,12 +669,12 @@ MonoBehaviour:
   dashKey: 120
   killSound: {fileID: 8300000, guid: 7c05d23bd91e39243bda5bd10a5f0888, type: 3}
   readySound: {fileID: 8300000, guid: e8e5fb16ebe2766438173856c4ba13e2, type: 3}
-  speed: 50
+  speed: 10
   damage: 50
-  bounceForce: 15
+  bounceForce: 20
   xPrompt: {fileID: 0}
   meterSubtractSlowness: 20
-  killsNeeded: 3
+  killsNeeded: 2
   enemiesKilled: 0
   canDash: 0
   meterSlider: {fileID: 0}

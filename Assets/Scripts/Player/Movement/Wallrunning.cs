@@ -50,6 +50,7 @@ public class Wallrunning : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         pm = GetComponent<PlayerMovement>();
         fovW = camM.GetComponent<Camera>().fieldOfView;
+        wallrunFov = fovW + 10f;
     }
 
     private void Update()

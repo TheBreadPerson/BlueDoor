@@ -18,7 +18,7 @@ MonoBehaviour:
   gunDamage: 4
   knockback: 5
   ammo: 35
-  range: 55
+  range: 100
   gunFalloff: 20
   reloadTime: 3
   sprayRays: 0
@@ -28,5 +28,5 @@ MonoBehaviour:
   automatic: 1
   canADS: 1
   Recoil: {x: 35, y: 35, z: 20}
-  AimRecoil: {x: 8, y: 5, z: 5}
+  AimRecoil: {x: 1, y: 5, z: 5}
   hasSpread: 0

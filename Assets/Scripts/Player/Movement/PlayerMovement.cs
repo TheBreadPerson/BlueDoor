@@ -12,11 +12,15 @@ public class PlayerMovement : MonoBehaviour
     float timer;
     [Header("Movement")]
     [Space]
-    public float airVelocityCap;
+    bool canJump;
+    public float acceleration;
+    public float velocityCap;
     private float MoveSpeed;
     public float crouchSpeed;
     public float walkSpeed;
     public float sprintSpeed;
+    float cyTimer;
+    public float coyoteTime;
     private float startYScale;
     public float crouchHeight;
     public AudioClip footstep;
@@ -33,6 +37,14 @@ public class PlayerMovement : MonoBehaviour
     public float jumpCooldown;
     public float airMultiplier;
     bool readyToJump;
+
+    [Header("Dash")]
+    [Space]
+    float dashTimer;
+    [HideInInspector] public bool dashed;
+    public KeyCode dashKey;
+    public float dashForce;
+    public float dashDuration;
 
     [Header("SlowMo")]
     public KeyCode slowKey = KeyCode.B;
@@ -128,6 +140,15 @@ public class PlayerMovement : MonoBehaviour
             Death();
         }
 
+        if ((!isGrounded && Input.GetKeyDown(dashKey) && !dashed))
+        {
+            dashed = true;
+        }
+
+        if((dashTimer < dashDuration) && dashed)
+        {
+            Dash();
+        }
 
         SwitchWeapon();
         if (Input.mouseScrollDelta.y > 0f)
@@ -168,12 +189,16 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-
+        if(wallrunning)
+        {
+            dashed = false;
+            dashTimer = 0f;
+        }
 
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, ground);
 
         MyInputs();
-        SpeedControl();
+        
         StateHandler();
 
         if (isGrounded && (horizontal != 0f && vertical != 0f))
@@ -198,8 +223,18 @@ public class PlayerMovement : MonoBehaviour
             timer += Time.deltaTime * 2f;
         }
 
+        if(isGrounded)
+        {
+            cyTimer = coyoteTime;
+            dashed = false;
+            dashTimer = 0f;
+        }
+        else
+        {
+            cyTimer -= Time.deltaTime;
+        }
 
-        if(Input.GetKey(jumpKey) && isGrounded && readyToJump)
+        if(Input.GetKey(jumpKey) && cyTimer > 0f && readyToJump)
         {
             readyToJump = false;
             Jump();
@@ -232,6 +267,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
+        SpeedControl();
     }
 
     void MyInputs()
@@ -299,13 +335,17 @@ public class PlayerMovement : MonoBehaviour
                 rb.AddForce(Vector3.down * 80f, ForceMode.Force);
             }
         }
-
         if(isGrounded)
-            rb.AddForce(MoveDirection.normalized * MoveSpeed * 10f, ForceMode.Force);
+            rb.AddForce(MoveDirection.normalized * MoveSpeed * (10f), ForceMode.Force);
         else
-            rb.AddForce(MoveDirection.normalized * MoveSpeed * 10f * airMultiplier, ForceMode.Force);
+            rb.AddForce(MoveDirection.normalized * MoveSpeed * (10f) * airMultiplier, ForceMode.Force);
 
         if(!wallrunning) rb.useGravity = !OnSlope();
+
+        if(MoveSpeed != 0f)
+        {
+            acceleration -= Time.deltaTime;
+        }
     }
 
     void SpeedControl()
@@ -322,16 +362,16 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector3 flatVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
-            if ((flatVelocity.magnitude > MoveSpeed) && isGrounded)
+            if ((flatVelocity.magnitude > velocityCap))
             {
-                Vector3 limitedVelocity = flatVelocity.normalized * MoveSpeed;
+                Vector3 limitedVelocity = flatVelocity.normalized * velocityCap;
                 rb.velocity = new Vector3(limitedVelocity.x, rb.velocity.y, limitedVelocity.z);
             }
-            else if((flatVelocity.magnitude > airVelocityCap) && !isGrounded)
-            {
-                Vector3 limitedVelocity = flatVelocity.normalized * MoveSpeed;
-                rb.velocity = new Vector3(limitedVelocity.x, rb.velocity.y, limitedVelocity.z);
-            }
+            //else if((flatVelocity.magnitude > airVelocityCap) && !isGrounded)
+            //{
+            //    Vector3 limitedVelocity = flatVelocity.normalized * MoveSpeed;
+            //    rb.velocity = new Vector3(limitedVelocity.x, rb.velocity.y, limitedVelocity.z);
+            //}
         }
     }
 
@@ -346,6 +386,15 @@ public class PlayerMovement : MonoBehaviour
     {
         readyToJump = true;
         exitingSlope = false;
+    }
+
+    void Dash()
+    {
+        rb.AddForce(orientation.forward * dashForce, ForceMode.Impulse);
+        if(dashTimer < dashDuration)
+        {
+            dashTimer += Time.deltaTime;
+        }
     }
 
     void StartCrouch()

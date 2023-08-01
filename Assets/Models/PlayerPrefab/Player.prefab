@@ -447,8 +447,8 @@ MonoBehaviour:
   airMultiplier: 1
   dashed: 0
   dashKey: 304
-  dashForce: 8
-  dashDuration: 0.07
+  dashForce: 10
+  dashDuration: 0.09
   slowKey: 101
   timeSlowMo: 0
   jumpKey: 32

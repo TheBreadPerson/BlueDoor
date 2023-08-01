@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jumping")]
     [Space]
+    bool doubledJumped;
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
@@ -225,6 +226,7 @@ public class PlayerMovement : MonoBehaviour
 
         if(isGrounded)
         {
+            doubledJumped = false;
             cyTimer = coyoteTime;
             dashed = false;
             dashTimer = 0f;
@@ -240,6 +242,16 @@ public class PlayerMovement : MonoBehaviour
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown);
         }
+
+        // DOUBLE JUMP
+
+        //else if(Input.GetKeyDown(jumpKey) && !doubledJumped && !wallrunning)
+        //{
+        //    doubledJumped = true;
+        //    readyToJump = false;
+        //    Jump();
+        //    Invoke(nameof(ResetJump), jumpCooldown);
+        //}
 
         if (Input.GetKeyDown(crouchKey) && !crouching)
         {

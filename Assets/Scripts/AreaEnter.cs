@@ -5,18 +5,30 @@ using UnityEngine.SceneManagement;
 
 public class AreaEnter : MonoBehaviour
 {
+    int enemInScene;
     bool enemiesInScene;
+    bool checkedEnemy;
     GameObject[] enemies;
     public bool needsAllKilled;
     public string nextSceneName;
 
     private void Update()
     {
-        if(GameObject.FindGameObjectsWithTag("Enemy") != null)
+        foreach(Enemy enem in FindObjectsByType<Enemy>(FindObjectsSortMode.None))
         {
-            enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            if(enem.isDead && !checkedEnemy)
+            {
+                enemInScene--;
+                checkedEnemy = true;
+            }
+            if (!enem.isDead && !checkedEnemy)
+            {
+                enemInScene++;
+                checkedEnemy = true;
+            }
         }
-        if(enemies.Length > 0)
+
+        if(enemInScene > 0)
         {
             enemiesInScene = true;
         }
@@ -25,7 +37,7 @@ public class AreaEnter : MonoBehaviour
             enemiesInScene = false;
         }
 
-        Debug.Log(enemies.Length);
+        Debug.Log(enemInScene);
     }
 
     private void OnTriggerEnter(Collider other)

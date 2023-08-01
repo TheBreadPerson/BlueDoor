@@ -36,7 +36,7 @@ public class Wallrunning : MonoBehaviour
     [Header("References")]
     public CameraMove camM;
     public Transform orientation;
-    public float wallrunFov;
+    float wallrunFov;
     private PlayerMovement pm;
     private Rigidbody rb;
 

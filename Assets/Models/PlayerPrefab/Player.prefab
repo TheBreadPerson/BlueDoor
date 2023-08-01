@@ -429,17 +429,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gun: {fileID: 0}
+  Cam: {fileID: 0}
   acceleration: 1
-  velocityCap: 15
+  velocityCap: 10
   crouchSpeed: 4
-  walkSpeed: 12
-  sprintSpeed: 12
+  walkSpeed: 10
+  sprintSpeed: 10
   coyoteTime: 0.25
   crouchHeight: 0.75
   footstep: {fileID: 8300000, guid: 4c1aa8735ac267d41aaeb22e4cdc466b, type: 3}
   footstepFrequency: 1
   footstepSource: {fileID: 9172891048424320486}
-  wallrunSpeed: 11
+  wallrunSpeed: 10.5
   groundDrag: 5
   standingDrag: 10
   jumpForce: 12
@@ -447,8 +448,8 @@ MonoBehaviour:
   airMultiplier: 1
   dashed: 0
   dashKey: 304
-  dashForce: 10
-  dashDuration: 0.09
+  dashForce: 8
+  dashDuration: 0.1
   slowKey: 101
   timeSlowMo: 0
   jumpKey: 32
@@ -646,7 +647,6 @@ MonoBehaviour:
   exitWallTime: 0.2
   camM: {fileID: 0}
   orientation: {fileID: 8817143052397786411}
-  wallrunFov: 95
   useGravity: 1
   gravityCounterForce: 25
 --- !u!114 &2167536902962571598

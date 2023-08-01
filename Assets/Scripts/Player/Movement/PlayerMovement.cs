@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     float timer;
     [Header("Movement")]
     [Space]
+    public GameObject Cam;
     bool canJump;
     public float acceleration;
     public float velocityCap;
@@ -41,6 +42,8 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Dash")]
     [Space]
+    float dashFov;
+    float currentCamFov;
     float dashTimer;
     [HideInInspector] public bool dashed;
     public KeyCode dashKey;
@@ -121,26 +124,30 @@ public class PlayerMovement : MonoBehaviour
         startYScale = transform.localScale.y;
         gun = guns[0].GetComponentInChildren<Gun>();
         playerHealth = Health;
+        currentCamFov = Cam.GetComponent<Camera>().fieldOfView;
+        dashFov = currentCamFov += 20f;
     }
 
     // Update is called once per frame
     void Update()
-    {
-        // WEAPON SWITCHED
-        StartCoroutine(GunRustle());
-        
+    {   
+        // HEALTH 
         healthSlider.value = playerHealth;
-        if(wallrunning)
+
+        if (playerHealth <= 0f)
+        {
+            Death();
+        }
+
+        // WALLRUNNING STATE
+        if (wallrunning)
         {
             state = MovementState.wallrunning;
             MoveSpeed = wallrunSpeed - gun.gunWeight;
         }
 
-        if(playerHealth <= 0f)
-        {
-            Death();
-        }
-
+        
+        // DASH
         if ((!isGrounded && Input.GetKeyDown(dashKey) && !dashed))
         {
             dashed = true;
@@ -151,7 +158,9 @@ public class PlayerMovement : MonoBehaviour
             Dash();
         }
 
+        // WEAPON SWITCHING
         SwitchWeapon();
+        StartCoroutine(GunRustle());
         if (Input.mouseScrollDelta.y > 0f)
         {
             if(gunIndex < guns.Length-1)
@@ -167,26 +176,11 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (guns.Length > 0)
+        for (int i = 0; i < guns.Length; i++)
         {
-            if(Input.GetKeyDown(KeyCode.Alpha1))
+            if (Input.GetKeyDown((i+1).ToString()))
             {
-                gunIndex = 0;
-            }
-        }
-
-        if (guns.Length > 1)
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                gunIndex = 1;
-            }
-        }
-        if (guns.Length > 2)
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                gunIndex = 2;
+                gunIndex = i;
             }
         }
 
@@ -402,10 +396,15 @@ public class PlayerMovement : MonoBehaviour
 
     void Dash()
     {
+        Cam.GetComponent<CameraMove>().DoFov(dashFov);
         rb.AddForce(orientation.forward * dashForce, ForceMode.Impulse);
         if(dashTimer < dashDuration)
         {
             dashTimer += Time.deltaTime;
+        }
+        if(dashTimer >= dashDuration)
+        {
+            Cam.GetComponent<CameraMove>().DoFov(currentCamFov);
         }
     }
 

@@ -8,34 +8,22 @@ public class AreaEnter : MonoBehaviour
     int enemInScene;
     bool enemiesInScene;
     bool checkedEnemy;
-    GameObject[] enemies;
+    public Enemy[] enemies;
     public bool needsAllKilled;
     public string nextSceneName;
 
     private void Update()
     {
-        foreach(Enemy enem in FindObjectsByType<Enemy>(FindObjectsSortMode.None))
+        // Check if any enemy is alive
+        foreach(Enemy enem in enemies)
         {
-            if(enem.isDead && !checkedEnemy)
+            if(enem.isDead)
             {
-                enemInScene--;
-                checkedEnemy = true;
-            }
-            if (!enem.isDead && !checkedEnemy)
-            {
-                enemInScene++;
-                checkedEnemy = true;
+                Debug.Log("DEAD");
             }
         }
 
-        if(enemInScene > 0)
-        {
-            enemiesInScene = true;
-        }
-        else
-        {
-            enemiesInScene = false;
-        }
+        enemiesInScene = enemInScene > 0;
 
         Debug.Log(enemInScene);
     }

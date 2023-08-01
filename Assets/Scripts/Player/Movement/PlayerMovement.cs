@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Dash")]
     [Space]
+    public AudioClip dashClip;
     float dashFov;
     float currentCamFov;
     float dashTimer;
@@ -109,7 +110,8 @@ public class PlayerMovement : MonoBehaviour
         sprinting,
         air,
         wallrunning,
-        crouching
+        crouching,
+        sliding
     }
 
     public bool wallrunning;
@@ -153,6 +155,7 @@ public class PlayerMovement : MonoBehaviour
         if ((!isGrounded && Input.GetKeyDown(dashKey) && !dashed))
         {
             dashed = true;
+            aSource.PlayOneShot(dashClip, .5f);
         }
 
         if((dashTimer < dashDuration) && dashed)
@@ -306,6 +309,11 @@ public class PlayerMovement : MonoBehaviour
 
     void StateHandler()
     {
+        if(sliding)
+        {
+            state = MovementState.sliding;
+        }
+
         if(isGrounded && Input.GetKey(sprintKey))
         {
             state = MovementState.sprinting;
@@ -403,8 +411,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Dash()
     {
+        
         Cam.GetComponent<CameraMove>().DoFov(dashFov);
-        rb.AddForce(orientation.forward * dashForce, ForceMode.Impulse);
+        rb.AddForce(MoveDirection.normalized * dashForce, ForceMode.Impulse);
         if(dashTimer < dashDuration)
         {
             dashTimer += Time.deltaTime;

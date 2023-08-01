@@ -31863,7 +31863,7 @@ MonoBehaviour:
   aiming: 0
   shootAnim: 0
   gunWeight: 0
-  playerLaunchForce: 15
+  playerLaunchForce: 20
   gun: {fileID: 11400000, guid: 7e58a694ba93edd48b4a3baa1b49bdb3, type: 2}
   gunShotSource: {fileID: 1196718743888354535}
   metalHit: {fileID: 8300000, guid: 37014e5bac09a8a47a7303e9f4ee1062, type: 3}

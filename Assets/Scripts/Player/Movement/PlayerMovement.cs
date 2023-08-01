@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Dash")]
     [Space]
+    public AudioClip dashClip;
     float dashFov;
     float currentCamFov;
     float dashTimer;
@@ -154,6 +155,7 @@ public class PlayerMovement : MonoBehaviour
         if ((!isGrounded && Input.GetKeyDown(dashKey) && !dashed))
         {
             dashed = true;
+            aSource.PlayOneShot(dashClip, .5f);
         }
 
         if((dashTimer < dashDuration) && dashed)
@@ -409,6 +411,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Dash()
     {
+        
         Cam.GetComponent<CameraMove>().DoFov(dashFov);
         rb.AddForce(orientation.forward * dashForce, ForceMode.Impulse);
         if(dashTimer < dashDuration)

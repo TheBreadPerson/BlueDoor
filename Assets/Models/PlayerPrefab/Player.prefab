@@ -451,8 +451,8 @@ MonoBehaviour:
   dashClip: {fileID: 8300000, guid: 9a1bd569b1fcbd14aa0393eabc846c8e, type: 3}
   dashed: 0
   dashKey: 304
-  dashForce: 8
-  dashDuration: 0.12
+  dashForce: 5
+  dashDuration: 0.1
   slowKey: 101
   timeSlowMo: 0
   jumpKey: 32

@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6229409161922685276
 Transform:
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 72237020462766077}
   m_LocalRotation: {x: -0, y: -0.0000010728835, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: -22.39}
+  m_LocalPosition: {x: 0, y: 0.016, z: -18.44}
   m_LocalScale: {x: 1.4166888, y: 1.416689, z: 1.4166889}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -49,7 +49,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8949406214967235760
 Transform:
@@ -67,7 +67,7 @@ Transform:
   - {fileID: 6229409161922685276}
   - {fileID: 8516698633149943323}
   m_Father: {fileID: 0}
-  m_RootOrder: 24
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!33 &3647738723685256104
 MeshFilter:
@@ -133,16 +133,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemies:
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   needsAllKilled: 1
-  nextSceneName: Menu
+  nextSceneName: SlideTest
   playerCamera: {fileID: 0}
-  cameraPos: {fileID: 0}
-  blackThing: {fileID: 0}
-  doorKnob: {fileID: 0}
-  lerpSpeed: 1
+  cameraPos: {fileID: 72237020462766077}
+  blackThing: {fileID: 4930020706109565945}
+  doorKnob: {fileID: 9205299347903724941}
+  lerpSpeed: 5
 --- !u!65 &4932696046365337612
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -191,7 +188,7 @@ Transform:
   m_GameObject: {fileID: 4930020706109565945}
   m_LocalRotation: {x: -0.70710677, y: -0.0000007748602, z: -0.0000007748602, w: 0.70710677}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4714779, y: 0, z: 0.3143187}
+  m_LocalScale: {x: 0.5, y: 0, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8949406214967235760}
@@ -263,7 +260,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7109371299235297293
 Transform:

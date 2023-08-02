@@ -48,13 +48,13 @@ public class AreaEnter : MonoBehaviour
             }
             else
             {
-                blackThing.transform.localScale = Vector3.Lerp(blackThing.transform.localScale, new Vector3(100,0,100), lerpSpeed * Time.deltaTime);
+                blackThing.transform.localScale = Vector3.Lerp(blackThing.transform.localScale, new Vector3(10,0,6), (lerpSpeed / 2) * Time.deltaTime);
             }
 
             //playerCamera.transform.position = cameraPos.transform.position;
             //playerCamera.transform.rotation = cameraPos.transform.rotation;
 
-            if ((blackThing.transform.localScale - new Vector3(100, 0, 100) ).magnitude < 1 )
+            if ((blackThing.transform.localScale - new Vector3(10, 0, 6)).magnitude < 1 )
             {
                 SceneManager.LoadScene(nextSceneName);
             }

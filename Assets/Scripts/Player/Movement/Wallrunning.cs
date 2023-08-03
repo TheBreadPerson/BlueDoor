@@ -6,6 +6,7 @@ using UnityEngine;
 public class Wallrunning : MonoBehaviour
 {
     float fovW;
+    float timer;
     [Header("Wallrunning")]
     public LayerMask whatIsWall;
     public LayerMask whatIsGround;
@@ -13,6 +14,7 @@ public class Wallrunning : MonoBehaviour
     public float wallRunTime;
     public float wallJumpUpForce;
     public float wallJumpSideForce;
+    public float footstepFrequency;
     private float wallRunTimer;
 
     [Header("Input")]
@@ -34,6 +36,8 @@ public class Wallrunning : MonoBehaviour
     private float exitWallTimer;
 
     [Header("References")]
+    public AudioSource footsteps;
+    public AudioClip footstepClip;
     public CameraMove camM;
     public Transform orientation;
     float wallrunFov;
@@ -57,6 +61,11 @@ public class Wallrunning : MonoBehaviour
     {
         CheckForWall();
         StateMachine();
+
+        if (timer < footstepFrequency)
+        {
+            timer += Time.deltaTime * 2f;
+        }
     }
 
     private void FixedUpdate()
@@ -144,6 +153,12 @@ public class Wallrunning : MonoBehaviour
             wallForward = -wallForward;
         }
 
+        if(timer >= footstepFrequency)
+        {
+            footsteps.PlayOneShot(footstepClip);
+            timer = 0f;
+        }
+
         rb.AddForce(wallForward * wallRunForce, ForceMode.Force);
 
         if (!(wallLeft && horizontalInput > 0) && !(wallRight && horizontalInput < 0))
@@ -155,6 +170,7 @@ public class Wallrunning : MonoBehaviour
 
     private void StopWallRun()
     {
+        footsteps.Stop();
         pm.wallrunning = false;
         camM.DoFov(fovW);
         camM.DoTilt(0f);

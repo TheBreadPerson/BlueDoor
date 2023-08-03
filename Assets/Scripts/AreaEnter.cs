@@ -26,13 +26,12 @@ public class AreaEnter : MonoBehaviour
         {
             if(enem.isDead)
             {
-                Debug.Log("DEAD");
+                
             }
         }
 
         enemiesInScene = enemInScene > 0;
 
-        Debug.Log(enemInScene);
 
         if (LevelEnd == true)
         {

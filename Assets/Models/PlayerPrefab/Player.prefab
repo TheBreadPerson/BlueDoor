@@ -403,7 +403,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4108215116204413329}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4, y: 0.967, z: -18.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -415,7 +415,7 @@ Transform:
   - {fileID: 6888328130700883007}
   - {fileID: 7843492115358333536}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8078407147570214627
 MonoBehaviour:
@@ -433,22 +433,23 @@ MonoBehaviour:
   Cam: {fileID: 0}
   sliding: 0
   acceleration: 1
-  velocityCap: 10
+  velocityCap: 11
   crouchSpeed: 4
-  walkSpeed: 10
-  sprintSpeed: 10
+  walkSpeed: 11
+  slideSpeed: 0
+  sprintSpeed: 11
   coyoteTime: 0.25
   crouchHeight: 0.75
-  footstep: {fileID: 8300000, guid: 4c1aa8735ac267d41aaeb22e4cdc466b, type: 3}
-  footstepFrequency: 1
+  footstep: {fileID: 8300000, guid: 935cb06ffd9faf14da4ba4ce8abbea07, type: 3}
+  footstepFrequency: 0.6
   footstepSource: {fileID: 9172891048424320486}
-  wallrunSpeed: 10.5
+  wallrunSpeed: 12
   groundDrag: 5
   standingDrag: 10
   jumpForce: 12
   jumpCooldown: 0.5
   airMultiplier: 1
-  dashClip: {fileID: 8300000, guid: 9a1bd569b1fcbd14aa0393eabc846c8e, type: 3}
+  dashClip: {fileID: 8300000, guid: 428e388813ee0d64d9d96ec9467ef0ba, type: 3}
   dashed: 0
   dashKey: 304
   dashForce: 5
@@ -457,7 +458,7 @@ MonoBehaviour:
   timeSlowMo: 0
   jumpKey: 32
   sprintKey: 304
-  crouchKey: 306
+  crouchKey: 99
   playerHeight: 2
   ground:
     serializedVersion: 2
@@ -644,10 +645,13 @@ MonoBehaviour:
   wallRunTime: 1.5
   wallJumpUpForce: 10
   wallJumpSideForce: 12
+  footstepFrequency: 0.4
   jumpKey: 32
   wallCheckDistance: 0.7
   minJumpHeight: 2
   exitWallTime: 0.2
+  footsteps: {fileID: 0}
+  footstepClip: {fileID: 0}
   camM: {fileID: 0}
   orientation: {fileID: 8817143052397786411}
   useGravity: 1
@@ -696,6 +700,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orientation: {fileID: 8817143052397786411}
   playerObj: {fileID: 9077135495759894058}
+  audioSource: {fileID: 9172891048424320486}
+  slideSound: {fileID: 8300000, guid: bb66a09596d7c04408a62d7f9222f51a, type: 3}
   maxSlideTime: 0.75
   slideForce: 200
   slideYScale: 0.5

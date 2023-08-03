@@ -7,6 +7,8 @@ public class Sliding : MonoBehaviour
     [Header("References")]
     public Transform orientation;
     public Transform playerObj;
+    public AudioSource audioSource;
+    public AudioClip slideSound;
     private Rigidbody rb;
     private PlayerMovement pm;
 
@@ -53,7 +55,7 @@ public class Sliding : MonoBehaviour
     private void StartSlide()
     {
         pm.sliding = true;
-
+        audioSource.PlayOneShot(slideSound);
         playerObj.localScale = new Vector3(playerObj.localScale.x, slideYScale, playerObj.localScale.z);
         rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
 
@@ -85,7 +87,7 @@ public class Sliding : MonoBehaviour
     private void StopSlide()
     {
         pm.sliding = false;
-
+        audioSource.Stop();
         playerObj.localScale = new Vector3(playerObj.localScale.x, startYScale, playerObj.localScale.z);
     }
 }

@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     private float MoveSpeed;
     public float crouchSpeed;
     public float walkSpeed;
+    public float slideSpeed;
     public float sprintSpeed;
     float cyTimer;
     public float coyoteTime;
@@ -61,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
     [Space]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
-    public KeyCode crouchKey = KeyCode.LeftControl;
+    public KeyCode crouchKey = KeyCode.C;
 
     [Header("Ground Check")]
     [Space]
@@ -128,13 +129,13 @@ public class PlayerMovement : MonoBehaviour
         gun = guns[0].GetComponentInChildren<Gun>();
         playerHealth = Health;
         currentCamFov = Cam.GetComponent<Camera>().fieldOfView;
-        dashFov = currentCamFov += 20f;
+        dashFov = currentCamFov + 20f;
         slidingS = GetComponent<Sliding>();
     }
 
     // Update is called once per frame
     void Update()
-    {   
+    {
         // HEALTH 
         healthSlider.value = playerHealth;
 
@@ -147,10 +148,10 @@ public class PlayerMovement : MonoBehaviour
         if (wallrunning)
         {
             state = MovementState.wallrunning;
-            MoveSpeed = wallrunSpeed - gun.gunWeight;
+            MoveSpeed = wallrunSpeed;
         }
 
-        
+
         // DASH
         if ((!isGrounded && Input.GetKeyDown(dashKey) && !dashed))
         {
@@ -158,7 +159,7 @@ public class PlayerMovement : MonoBehaviour
             aSource.PlayOneShot(dashClip, .5f);
         }
 
-        if((dashTimer < dashDuration) && dashed)
+        if ((dashTimer < dashDuration) && dashed)
         {
             Dash();
         }
@@ -168,7 +169,7 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(GunRustle());
         if (Input.mouseScrollDelta.y > 0f)
         {
-            if(gunIndex < guns.Length-1)
+            if (gunIndex < guns.Length - 1)
             {
                 gunIndex++;
             }
@@ -183,13 +184,20 @@ public class PlayerMovement : MonoBehaviour
 
         for (int i = 0; i < guns.Length; i++)
         {
-            if (Input.GetKeyDown((i+1).ToString()))
+            if (Input.GetKeyDown((i + 1).ToString()))
             {
                 gunIndex = i;
             }
         }
 
-        if(wallrunning)
+        // SPEED FOV
+        //if(!wallrunning)
+        //{
+        //    Cam.GetComponent<CameraMove>().DoFov(currentCamFov + rb.velocity.magnitude/5f);
+        //    Debug.Log(currentCamFov);
+        //}
+
+        if (wallrunning)
         {
             dashed = false;
             dashTimer = 0f;
@@ -198,22 +206,22 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, ground);
 
         MyInputs();
-        
+
         StateHandler();
 
-        if (isGrounded && (horizontal != 0f && vertical != 0f))
+        if (isGrounded)
             rb.drag = groundDrag;
         else
             rb.drag = 0;
 
-        if(isGrounded && (horizontal == 0f && vertical == 0f))
-        {
-            rb.drag = standingDrag;
-        }
+        //if(isGrounded && (horizontal == 0f && vertical == 0f))
+        //{
+        //    rb.drag = standingDrag;
+        //}
 
         //FOOTSTEPS
 
-        if(isGrounded && (horizontal != 0f || vertical != 0f) && timer >= footstepFrequency)
+        if (isGrounded && (horizontal != 0f || vertical != 0f) && timer >= footstepFrequency && !sliding)
         {
             footstepSource.PlayOneShot(footstep);
             timer = 0f;
@@ -312,24 +320,32 @@ public class PlayerMovement : MonoBehaviour
         if(sliding)
         {
             state = MovementState.sliding;
+            if(OnSlope() && rb.velocity.y < 0.1f)
+            {
+                MoveSpeed = slideSpeed;
+            }
+            else
+            {
+                MoveSpeed = sprintSpeed;
+            }
         }
 
         if(isGrounded && Input.GetKey(sprintKey))
         {
             state = MovementState.sprinting;
-            MoveSpeed = sprintSpeed - gun.gunWeight;
+            MoveSpeed = sprintSpeed;
         }
 
         else if (crouching && !sliding)
         {
             state = MovementState.crouching;
-            MoveSpeed = crouchSpeed - gun.gunWeight;
+            MoveSpeed = crouchSpeed;
         }
 
         else if(isGrounded)
         {
             state = MovementState.walking;
-            MoveSpeed = walkSpeed - gun.gunWeight;
+            MoveSpeed = walkSpeed;
         }
 
         else
@@ -344,28 +360,25 @@ public class PlayerMovement : MonoBehaviour
 
         if(OnSlope() && !exitingSlope)
         {
-            rb.AddForce(GetSlopeMoveDirection(MoveDirection) * MoveSpeed * 10f, ForceMode.Force);
+            rb.AddForce(GetSlopeMoveDirection(MoveDirection) * MoveSpeed * 20f, ForceMode.Force);
 
-            if(rb.velocity.y > 0f)
+            if(rb.velocity.y > 0)
             {
                 rb.AddForce(Vector3.down * 80f, ForceMode.Force);
             }
         }
-        if (isGrounded)
+        else if (isGrounded)
         {
             rb.AddForce(MoveDirection.normalized * MoveSpeed * (10f), ForceMode.Force);
         }
-        else
+        else if(!isGrounded)
         {
             rb.AddForce(MoveDirection.normalized * MoveSpeed * (10f) * airMultiplier, ForceMode.Force);
         }
-            
 
-        if(!wallrunning) rb.useGravity = !OnSlope();
-
-        if(MoveSpeed != 0f)
+        if (!wallrunning)
         {
-            acceleration -= Time.deltaTime;
+            rb.useGravity = !OnSlope();
         }
     }
 
@@ -437,7 +450,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool OnSlope()
     {
-        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
         {
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return angle < maxSlopeAngle && angle != 0;

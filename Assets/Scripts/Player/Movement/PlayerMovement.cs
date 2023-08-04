@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
     [Space]
     public AudioClip dashClip;
     float dashFov;
-    float currentCamFov;
+    [HideInInspector] public float currentCamFov;
     float dashTimer;
     [HideInInspector] public bool dashed;
     public KeyCode dashKey;
@@ -87,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Main")]
     [Space]
+    public Pause pauseMan;
     public Slider healthSlider;
     public Transform orientation;
     [HideInInspector] public float playerHealth;
@@ -129,13 +130,13 @@ public class PlayerMovement : MonoBehaviour
         gun = guns[0].GetComponentInChildren<Gun>();
         playerHealth = Health;
         currentCamFov = Cam.GetComponent<Camera>().fieldOfView;
-        dashFov = currentCamFov + 20f;
         slidingS = GetComponent<Sliding>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        dashFov = currentCamFov + 20f;
         // HEALTH 
         healthSlider.value = playerHealth;
 
@@ -153,42 +154,46 @@ public class PlayerMovement : MonoBehaviour
 
 
         // DASH
-        if ((!isGrounded && Input.GetKeyDown(dashKey) && !dashed))
+        if ((!isGrounded && Input.GetKeyDown(dashKey) && !dashed) && !pauseMan.paused)
         {
             dashed = true;
             aSource.PlayOneShot(dashClip, .5f);
         }
 
-        if ((dashTimer < dashDuration) && dashed)
+        if ((dashTimer < dashDuration) && dashed && !pauseMan.paused && !wallrunning)
         {
             Dash();
         }
 
         // WEAPON SWITCHING
-        SwitchWeapon();
-        StartCoroutine(GunRustle());
-        if (Input.mouseScrollDelta.y > 0f)
+        if(!pauseMan.paused)
         {
-            if (gunIndex < guns.Length - 1)
+            SwitchWeapon();
+            StartCoroutine(GunRustle());
+            if (Input.mouseScrollDelta.y > 0f)
             {
-                gunIndex++;
+                if (gunIndex < guns.Length - 1)
+                {
+                    gunIndex++;
+                }
             }
-        }
-        if (Input.mouseScrollDelta.y < 0f)
-        {
-            if (gunIndex > 0)
+            if (Input.mouseScrollDelta.y < 0f)
             {
-                gunIndex--;
+                if (gunIndex > 0)
+                {
+                    gunIndex--;
+                }
             }
-        }
 
-        for (int i = 0; i < guns.Length; i++)
-        {
-            if (Input.GetKeyDown((i + 1).ToString()))
+            for (int i = 0; i < guns.Length; i++)
             {
-                gunIndex = i;
+                if (Input.GetKeyDown((i + 1).ToString()))
+                {
+                    gunIndex = i;
+                }
             }
         }
+        
 
         // SPEED FOV
         //if(!wallrunning)
@@ -279,7 +284,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForEndOfFrame();
         if (prevGunIndex != gunIndex)
         {
-            aSource.PlayOneShot(gunRustle);
+            guns[gunIndex].GetComponentInParent<AudioSource>().PlayOneShot(gunRustle);
         }
     }
 

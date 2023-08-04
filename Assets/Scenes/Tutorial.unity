@@ -1404,7 +1404,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 965c3bea92daf13488b933454f7f31ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemies: []
+  needsAllKilled: 0
   nextSceneName: MappedLevel
+  playerCamera: {fileID: 0}
+  cameraPos: {fileID: 0}
+  blackThing: {fileID: 0}
+  doorKnob: {fileID: 0}
+  lerpSpeed: 1
 --- !u!65 &629852847
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2768,6 +2775,11 @@ PrefabInstance:
       propertyPath: cameraPos
       value: 
       objectReference: {fileID: 700966775}
+    - target: {fileID: 2219164487809407290, guid: 5ce828b286cbfad4898f09488d8ececf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2920940243822643267, guid: 5ce828b286cbfad4898f09488d8ececf,
         type: 3}
       propertyPath: m_IsActive

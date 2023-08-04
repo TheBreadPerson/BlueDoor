@@ -27179,6 +27179,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2051921974}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &778565146 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1368161887567939598, guid: 5ce828b286cbfad4898f09488d8ececf,
+    type: 3}
+  m_PrefabInstance: {fileID: 2051921974}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &806912533
 Mesh:
   m_ObjectHideFlags: 0
@@ -30442,6 +30448,16 @@ PrefabInstance:
       propertyPath: flashlight
       value: 
       objectReference: {fileID: 2051921976}
+    - target: {fileID: 2167536902962571598, guid: 52e427cae15d2eb468688a5e9ebf8c4c,
+        type: 3}
+      propertyPath: xPrompt
+      value: 
+      objectReference: {fileID: 434512501}
+    - target: {fileID: 2167536902962571598, guid: 52e427cae15d2eb468688a5e9ebf8c4c,
+        type: 3}
+      propertyPath: meterSlider
+      value: 
+      objectReference: {fileID: 1292071596}
     - target: {fileID: 3353757995767484319, guid: 52e427cae15d2eb468688a5e9ebf8c4c,
         type: 3}
       propertyPath: m_RootOrder
@@ -30504,6 +30520,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8078407147570214627, guid: 52e427cae15d2eb468688a5e9ebf8c4c,
         type: 3}
+      propertyPath: Cam
+      value: 
+      objectReference: {fileID: 778565146}
+    - target: {fileID: 8078407147570214627, guid: 52e427cae15d2eb468688a5e9ebf8c4c,
+        type: 3}
       propertyPath: deathScreen
       value: 
       objectReference: {fileID: 1365581448}
@@ -30517,6 +30538,11 @@ PrefabInstance:
       propertyPath: secondState
       value: 
       objectReference: {fileID: 835676769}
+    - target: {fileID: 8078407147570214627, guid: 52e427cae15d2eb468688a5e9ebf8c4c,
+        type: 3}
+      propertyPath: healthSlider
+      value: 
+      objectReference: {fileID: 1292071596}
     - target: {fileID: 8078407147570214627, guid: 52e427cae15d2eb468688a5e9ebf8c4c,
         type: 3}
       propertyPath: 'guns.Array.data[0]'
@@ -42756,7 +42782,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 2051921974}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 778565146}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c56e67e844f917428213a9a6a65dd8c, type: 3}

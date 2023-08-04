@@ -36,7 +36,7 @@ public class Pickup : MonoBehaviour
     {
         if (other.GetComponentInParent<PlayerMovement>().gun != null)
         {
-            other.GetComponent<AudioSource>().PlayOneShot(clip);
+            source.PlayOneShot(clip);
             other.GetComponentInParent<PlayerMovement>().gun.currentMags += magsGained;
             Destroy(gameObject);
         }
@@ -48,7 +48,7 @@ public class Pickup : MonoBehaviour
         {
             if (other.GetComponentInParent<PlayerMovement>().playerHealth < other.GetComponentInParent<PlayerMovement>().Health)
             {
-                other.GetComponent<AudioSource>().PlayOneShot(clip);
+                source.PlayOneShot(clip);
                 other.GetComponentInParent<PlayerMovement>().playerHealth += healthAmount;
                 Destroy(gameObject);
             }

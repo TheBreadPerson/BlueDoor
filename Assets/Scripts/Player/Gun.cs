@@ -44,7 +44,7 @@ public class Gun : MonoBehaviour
     private Camera mCam;
     private float normalFov;
     public float zoomAmount;
-    public float currentPOV;
+    //public float currentPOV;
     public float adsSpeed;
     public Transform gunHolder;
     public Transform aimPoint;
@@ -58,6 +58,7 @@ public class Gun : MonoBehaviour
     public LayerMask Shootable;
     float gunRange;
     private RaycastHit hit;
+    AudioSource enemySource;
     public GameObject bloodSplat;
 
     [Header("Recoil")]
@@ -98,7 +99,7 @@ public class Gun : MonoBehaviour
         falloff = gun.gunFalloff;
         hasAmmo = true;
         mCam = mainCam.GetComponent<Camera>();
-        normalFov = mainCam.GetComponent<Camera>().fieldOfView;
+        
 
         deafult = crossH.color;
 
@@ -119,7 +120,8 @@ public class Gun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(currentammo > 0f)
+        normalFov = playerMovement.currentCamFov;
+        if (currentammo > 0f)
         {
             hasAmmo = true;
         }
@@ -129,7 +131,7 @@ public class Gun : MonoBehaviour
             hasAmmo = false;
         }
 
-        if(Input.GetKeyDown(KeyCode.R) && currentMags > 0 && !reloading)
+        if(Input.GetKeyDown(KeyCode.R) && currentMags > 0 && !reloading && currentammo < clipSize)
         {
             StartCoroutine(Reload());
         }
@@ -162,28 +164,32 @@ public class Gun : MonoBehaviour
             StopAim();
         }
 
-        if (Automatic)
+        if (!playerMovement.pauseMan.paused)
         {
-            if (Input.GetMouseButton(0) && hasAmmo && !reloading)
+            if (Automatic)
             {
-                if (currentCooldown <= 0f)
+                if (Input.GetMouseButton(0) && hasAmmo && !reloading)
                 {
-                    Shoot();
-                    currentCooldown = fireCooldown;
+                    if (currentCooldown <= 0f)
+                    {
+                        Shoot();
+                        currentCooldown = fireCooldown;
+                    }
+                }
+            }
+            else
+            {
+                if (Input.GetMouseButtonDown(0) && hasAmmo && !reloading)
+                {
+                    if (currentCooldown <= 0f)
+                    {
+                        Shoot();
+                        currentCooldown = fireCooldown;
+                    }
                 }
             }
         }
-        else
-        {
-            if (Input.GetMouseButtonDown(0) && hasAmmo && !reloading)
-            {
-                if (currentCooldown <= 0f)
-                {
-                    Shoot();
-                    currentCooldown = fireCooldown;
-                }
-            }
-        }
+        
         if (!Input.GetMouseButton(0))
         {
             crossMultiplier = 1f;
@@ -238,10 +244,22 @@ public class Gun : MonoBehaviour
             }
             if(hit.transform.CompareTag("Enemy"))
             {
+                if (hit.transform.GetComponent<AudioSource>())
+                {
+                    enemySource = hit.transform.GetComponent<AudioSource>();
+                }
                 GameObject blood = Instantiate(bloodSplatter.gameObject, hit.point + (hit.normal * 0.01f), Quaternion.FromToRotation(Vector3.up, hit.normal));
                 GameObject bloodDecal = Instantiate(bloodSplat, hit.point + (hit.normal * 0.01f), Quaternion.FromToRotation(Vector3.up, hit.normal));
                 bloodDecal.transform.parent = hit.transform;
-                blood.AddComponent<AudioSource>().PlayOneShot(bodyImpact);
+                //if (!hit.transform.GetComponent<AudioSource>())
+                //{
+                //    blood.AddComponent<AudioSource>().PlayOneShot(bodyImpact);
+                //}
+                //else
+                //{
+                //    enemySource.PlayOneShot(bodyImpact);
+                //}
+                enemySource.PlayOneShot(bodyImpact);
                 Destroy(blood, 5f);
                 Destroy(bloodDecal, 5f);
                 float falloffAmt = (shotDistance * falloff)/2f;
@@ -252,14 +270,6 @@ public class Gun : MonoBehaviour
                 } 
             }
 
-            if(hit.transform.CompareTag("Intercom"))
-            {
-                gunShotSource.PlayOneShot(metalHit);
-                GameObject intercom = hit.transform.gameObject;
-                intercom.AddComponent<Rigidbody>();
-                intercom.GetComponent<AudioSource>().enabled = false;
-                intercom.GetComponent<AudioReact>().enabled = false;
-            }
         }
 
         else if(Physics.Raycast(shootPoint.position, shootPoint.TransformDirection(Vector3.forward), out hit, gunRange, Shootable) && gun.hasSpread)
@@ -288,25 +298,28 @@ public class Gun : MonoBehaviour
                     }
                     if (hit.transform.CompareTag("Enemy"))
                     {
+                        if (hit.transform.GetComponent<AudioSource>())
+                        {
+                            enemySource = hit.transform.GetComponent<AudioSource>();
+                        }
                         GameObject blood = Instantiate(bloodSplatter.gameObject, hit.point + (hit.normal * 0.01f), Quaternion.FromToRotation(Vector3.up, hit.normal));
                         GameObject bloodDecal = Instantiate(bloodSplat, hit.point + (hit.normal * 0.01f), Quaternion.FromToRotation(Vector3.up, hit.normal));
                         bloodDecal.transform.parent = hit.transform;
-                        blood.AddComponent<AudioSource>().PlayOneShot(bodyImpact);
+                        //if (!hit.transform.GetComponent<AudioSource>())
+                        //{
+                        //    blood.AddComponent<AudioSource>().PlayOneShot(bodyImpact);
+                        //}
+                        //else
+                        //{
+                        //    enemySource.PlayOneShot(bodyImpact);
+                        //}
+                        enemySource.PlayOneShot(bodyImpact);
                         Destroy(blood, 5f);
                         Destroy(bloodDecal, 5f);
                         float falloffAmt = (shotDistance * falloff) / 2f;
                         hit.transform.GetComponent<Enemy>().Damage(gunDamage - (shotDistance / falloff));
                         hit.transform.GetComponent<Rigidbody>().AddForce(Barrel.forward * gun.knockback, ForceMode.Impulse);
 
-                    }
-
-                    if (hit.transform.CompareTag("Intercom"))
-                    {
-                        gunShotSource.PlayOneShot(metalHit);
-                        GameObject intercom = hit.transform.gameObject;
-                        intercom.AddComponent<Rigidbody>();
-                        intercom.GetComponent<AudioSource>().enabled = false;
-                        intercom.GetComponent<AudioReact>().enabled = false;
                     }
                 }
             }

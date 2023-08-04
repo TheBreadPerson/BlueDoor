@@ -314,7 +314,7 @@ MonoBehaviour:
   gunWeight: 0
   playerLaunchForce: 0
   gun: {fileID: 11400000, guid: b5a203fd2bf269545ac68f066605c116, type: 2}
-  gunShotSource: {fileID: 2106215525591940101}
+  gunShotSource: {fileID: 4401911300459799172}
   metalHit: {fileID: 8300000, guid: 37014e5bac09a8a47a7303e9f4ee1062, type: 3}
   bodyImpact: {fileID: 8300000, guid: 6c368ae362e604e4bb5344752e780f5d, type: 3}
   BulletHole: {fileID: 1543204187235765034, guid: 532680068a7cae14295e36ab89a761ac,
@@ -902,7 +902,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6669258770732656376
 Transform:
   m_ObjectHideFlags: 0
@@ -1003,6 +1003,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6436006739569431896}
+  - component: {fileID: 4401911300459799172}
   m_Layer: 7
   m_Name: Guns
   m_TagString: Untagged
@@ -1028,6 +1029,103 @@ Transform:
   m_Father: {fileID: 8698861712047195379}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &4401911300459799172
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3433481825842837048}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 9129290812392894819, guid: 1c97981afd223ab41aa5fef438f0e13d,
+    type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3562947804541490527
 GameObject:
   m_ObjectHideFlags: 0
@@ -16049,7 +16147,7 @@ Transform:
   m_Children:
   - {fileID: 7794824634698023813}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &412556626677259314
 MonoBehaviour:
@@ -16309,7 +16407,7 @@ MonoBehaviour:
   gunWeight: 0
   playerLaunchForce: 20
   gun: {fileID: 11400000, guid: 7e58a694ba93edd48b4a3baa1b49bdb3, type: 2}
-  gunShotSource: {fileID: 1196718743888354535}
+  gunShotSource: {fileID: 4401911300459799172}
   metalHit: {fileID: 8300000, guid: 37014e5bac09a8a47a7303e9f4ee1062, type: 3}
   bodyImpact: {fileID: 8300000, guid: 6c368ae362e604e4bb5344752e780f5d, type: 3}
   BulletHole: {fileID: 1543204187235765034, guid: 532680068a7cae14295e36ab89a761ac,
@@ -16605,7 +16703,7 @@ MonoBehaviour:
   gunWeight: 0
   playerLaunchForce: 0
   gun: {fileID: 11400000, guid: 410f2f9eba2ad28429dd5df3045a9561, type: 2}
-  gunShotSource: {fileID: 8596430330978312646}
+  gunShotSource: {fileID: 4401911300459799172}
   metalHit: {fileID: 8300000, guid: 37014e5bac09a8a47a7303e9f4ee1062, type: 3}
   bodyImpact: {fileID: 8300000, guid: 6c368ae362e604e4bb5344752e780f5d, type: 3}
   BulletHole: {fileID: 1543204187235765034, guid: 532680068a7cae14295e36ab89a761ac,

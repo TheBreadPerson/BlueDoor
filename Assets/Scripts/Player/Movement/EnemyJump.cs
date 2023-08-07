@@ -35,8 +35,9 @@ public class EnemyJump : MonoBehaviour
 
     [Header("Meter")]
     [Space]
-    bool dashed;
+    public bool dashed;
     public GameObject xPrompt;
+    public TrailRenderer line;
     public float meterSubtractSlowness;
     public float killsNeeded;
     public float enemiesKilled;
@@ -80,7 +81,8 @@ public class EnemyJump : MonoBehaviour
             playedReadySound = false;
         }
         meterSlider.value = enemiesKilled/killsNeeded;
-        xPrompt.SetActive(canDash);
+        xPrompt.SetActive(canDash && InEnemyRange() && EnemyView());
+        line.enabled = canDash;
         if (canDash)
         {
             if(enemiesKilled > 0f && dashed)

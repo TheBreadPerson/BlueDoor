@@ -12,7 +12,10 @@ EditorBuildSettings:
     path: Assets/Scenes/SlideTest.unity
     guid: 68579457f0d51774b933a025e8c1ee76
   - enabled: 1
-    path: Assets/Scenes/MappedLevel.unity
-    guid: 3bbf9767d0e259047aefcfa49240d9b2
+    path: Assets/Scenes/Stacks.unity
+    guid: 31af261cb6cb4ab48a4c37b5f861b042
+  - enabled: 1
+    path: Assets/Scenes/Level1.unity
+    guid: 8e05240e4ac77714188022a43ffef454
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

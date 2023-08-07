@@ -7,8 +7,11 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    bool reloadSound = false;
+    public GameObject fractured;
+    public GameObject normal;
     Animator anim;
-    public bool animatedFully;
+    public bool swapDeadBody;
     bool seperatedGun;
     Transform enemyGun;
     EnemyJump enemyJump;
@@ -25,7 +28,7 @@ public class Enemy : MonoBehaviour
     RaycastHit hit, shotHit, moveHit;
     PlayerMovement playerM;
     public AudioSource enemyShot;
-    AudioClip gunS;
+    AudioClip gunS, reloadS;
     public ParticleSystem enemyFlash;
     float timer;
     float maxAmmo;
@@ -48,6 +51,7 @@ public class Enemy : MonoBehaviour
         Health = enemy.health;
         shotCooldown = enemy.fireRate;
         gunS = enemy.gunClip;
+        reloadS = enemy.reloadSound;
         shootRange = enemy.range;
         maxAmmo = enemy.ammo;
         reloadTime = enemy.reloadTime;
@@ -99,7 +103,7 @@ public class Enemy : MonoBehaviour
 
         if (Physics.Raycast(transform.position, playerDir, out hit, shootRange, playerLayer) && canShoot && !isDead)
         {
-            if (hit.transform.CompareTag("Player") && hasAmmo)
+            if (hit.transform.CompareTag("Player") && hasAmmo && !playerM.playerDead)
             {
                 Shoot();
             }
@@ -180,8 +184,14 @@ public class Enemy : MonoBehaviour
     }
     public void Death()
     {
-        if (!isDead) enemyJump.enemiesKilled++;
-        if(enemyGun != null && !seperatedGun)
+        if(swapDeadBody && fractured != null && normal != null)
+        {
+            normal.SetActive(false);
+            fractured.SetActive(true);
+        }
+        if (!isDead && !enemyJump.dashed) enemyJump.enemiesKilled++;
+        else if (!isDead && !enemyJump.dashed) enemyJump.enemiesKilled -= enemy.jumpCost;
+        if (enemyGun != null && !seperatedGun)
         {
             DropPickups();
             enemyGun.gameObject.AddComponent<MeshCollider>().convex = true;
@@ -209,7 +219,13 @@ public class Enemy : MonoBehaviour
     IEnumerator EnemyReload()
     {
         reloading = true;
+        if(!reloadSound)
+        {
+            enemyShot.PlayOneShot(reloadS);
+            reloadSound = true;
+        }
         yield return new WaitForSeconds(reloadTime);
+        reloadSound = false;
         reloading = false;
         currentAmmo = maxAmmo;
     }

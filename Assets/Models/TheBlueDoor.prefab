@@ -134,7 +134,7 @@ MonoBehaviour:
   enemies:
   - {fileID: 0}
   needsAllKilled: 1
-  nextSceneName: SlideTest
+  nextSceneName: MappedLevel
   playerCamera: {fileID: 0}
   cameraPos: {fileID: 72237020462766077}
   blackThing: {fileID: 4930020706109565945}

@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class Pause : MonoBehaviour
 {
     public bool paused;
+    public float pauseVolume = -40f;
     public PlayerMovement pm;
     public Slider masterSlider, effectsSlider, playerSlider, musicSlider, fovSlider, sensSlider;
     public AudioMixer master;
@@ -36,10 +37,10 @@ public class Pause : MonoBehaviour
         if(paused)
         {
             Time.timeScale = 0f;
-            master.SetFloat("Volume", 0f);
-            effectsMixer.audioMixer.SetFloat("EffectsVolume", 0f);
-            playerMixer.audioMixer.SetFloat("PlayerVolume", 0f);
-            musicMixer.audioMixer.SetFloat("MusicVolume", 0f);
+            master.SetFloat("Volume", pauseVolume);
+            effectsMixer.audioMixer.SetFloat("EffectsVolume", pauseVolume);
+            playerMixer.audioMixer.SetFloat("PlayerVolume", pauseVolume);
+            musicMixer.audioMixer.SetFloat("MusicVolume", pauseVolume);
         }
         else
         {

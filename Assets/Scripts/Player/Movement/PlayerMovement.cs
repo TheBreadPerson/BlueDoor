@@ -1,8 +1,10 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -12,7 +14,6 @@ public class PlayerMovement : MonoBehaviour
     float timer;
     [Header("Movement")]
     [Space]
-    Sliding slidingS;
     public GameObject Cam;
     bool canJump;
     public bool sliding;
@@ -22,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
     public float crouchSpeed;
     public float walkSpeed;
     public float slideSpeed;
+    float desiredMoveSpeed;
+    float lastDesiredMoveSpeed;
     public float sprintSpeed;
     float cyTimer;
     public float coyoteTime;
@@ -85,8 +88,10 @@ public class PlayerMovement : MonoBehaviour
     public AudioSource gruntSound;
     public AudioClip gunRustle;
 
+
     [Header("Main")]
     [Space]
+    public bool playerDead;
     public Pause pauseMan;
     public Slider healthSlider;
     public Transform orientation;
@@ -122,6 +127,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerDead = false;
         healthSlider.maxValue = Health;
         rb = GetComponent<Rigidbody>();
         ResetJump();
@@ -130,12 +136,15 @@ public class PlayerMovement : MonoBehaviour
         gun = guns[0].GetComponentInChildren<Gun>();
         playerHealth = Health;
         currentCamFov = Cam.GetComponent<Camera>().fieldOfView;
-        slidingS = GetComponent<Sliding>();
+        state = MovementState.walking;
+        MoveSpeed = walkSpeed;
+        desiredMoveSpeed = walkSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(MoveSpeed + " desired " + desiredMoveSpeed + " " + state);
         dashFov = currentCamFov + 20f;
         // HEALTH 
         healthSlider.value = playerHealth;
@@ -151,6 +160,7 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.wallrunning;
             MoveSpeed = wallrunSpeed;
         }
+
 
 
         // DASH
@@ -327,15 +337,15 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.sliding;
             if(OnSlope() && rb.velocity.y < 0.1f)
             {
-                MoveSpeed = slideSpeed;
+                desiredMoveSpeed = slideSpeed;
             }
             else
             {
-                MoveSpeed = sprintSpeed;
+                desiredMoveSpeed = sprintSpeed;
             }
         }
 
-        if(isGrounded && Input.GetKey(sprintKey))
+        else if(isGrounded && Input.GetKey(sprintKey))
         {
             state = MovementState.sprinting;
             MoveSpeed = sprintSpeed;
@@ -357,7 +367,37 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.air;
         }
+
+        if (Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 4f && MoveSpeed != 0)
+        {
+            StopAllCoroutines();
+            StartCoroutine(SmoothlyLerpMoveSpeed());
+        }
+
+        else
+        {
+            MoveSpeed = desiredMoveSpeed;
+        }
+
+        lastDesiredMoveSpeed = desiredMoveSpeed;
     }
+
+    public IEnumerator SmoothlyLerpMoveSpeed()
+    {
+        float time = 0;
+        float diff = Mathf.Abs(desiredMoveSpeed - MoveSpeed);
+        float startV = MoveSpeed;
+
+        while (time < diff)
+        {
+            MoveSpeed = Mathf.Lerp(startV, desiredMoveSpeed, time/diff);
+            time += Time.deltaTime * acceleration;
+            yield return null;
+        }
+
+        MoveSpeed = desiredMoveSpeed;
+    }
+
 
     void MovePlayer()
     {
@@ -429,7 +469,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Dash()
     {
-        
         Cam.GetComponent<CameraMove>().DoFov(dashFov);
         rb.AddForce(MoveDirection.normalized * dashForce, ForceMode.Impulse);
         if(dashTimer < dashDuration)
@@ -482,6 +521,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Death()
     {
+        playerDead = true;
         deathScreen.SetActive(true);
         Cursor.lockState = CursorLockMode.None; Cursor.visible = true;
         Time.timeScale = 0f;

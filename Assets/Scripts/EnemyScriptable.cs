@@ -7,6 +7,8 @@ using UnityEngine;
 public class EnemyScriptable : ScriptableObject
 {
     public AudioClip gunClip;
+    public AudioClip reloadSound;
+    public float jumpCost;
     public float fireRate;
     public float damage;
     public float range;

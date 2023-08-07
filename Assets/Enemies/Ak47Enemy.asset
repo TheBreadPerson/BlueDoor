@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Ak47Enemy
   m_EditorClassIdentifier: 
   gunClip: {fileID: 8300000, guid: cd75f112aa498fd47b016c27a46b58a8, type: 3}
-  fireRate: 0.8
+  reloadSound: {fileID: 8300000, guid: d67dab4315fc940449e96306e5998100, type: 3}
+  jumpCost: 1
+  fireRate: 1.5
   damage: 2
   range: 35
   health: 20

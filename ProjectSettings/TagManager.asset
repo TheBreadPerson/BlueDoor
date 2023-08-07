@@ -12,6 +12,7 @@ TagManager:
   - Ground
   - Portal
   - Intercom
+  - Fracture
   layers:
   - Default
   - TransparentFX

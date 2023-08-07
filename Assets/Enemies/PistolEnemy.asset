@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: PistolEnemy
   m_EditorClassIdentifier: 
   gunClip: {fileID: 8300000, guid: e714c242974a2574bbb541326907dd5f, type: 3}
+  reloadSound: {fileID: 8300000, guid: abc77a97c4039a34798ab5f5a707d30b, type: 3}
+  jumpCost: 1
   fireRate: 2
   damage: 5
-  range: 15
+  range: 20
   health: 20
   ammo: 7
   reloadTime: 3

@@ -11,6 +11,7 @@ public class AreaEnter : MonoBehaviour
     bool checkedEnemy;
     public Enemy[] enemies;
     public bool needsAllKilled;
+    public bool overrideNextScene;
     public string nextSceneName;
     private bool LevelEnd = false;
     public GameObject playerCamera;
@@ -55,7 +56,14 @@ public class AreaEnter : MonoBehaviour
 
             if ((blackThing.transform.localScale - new Vector3(10, 0, 6)).magnitude < 1 )
             {
-                SceneManager.LoadScene(nextSceneName);
+                if(overrideNextScene)
+                {
+                    SceneManager.LoadScene(nextSceneName);
+                }
+                else
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                }
             }
             
         }

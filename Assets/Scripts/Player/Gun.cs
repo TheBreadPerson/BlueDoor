@@ -165,7 +165,7 @@ public class Gun : MonoBehaviour
             StopAim();
         }
 
-        if (!playerMovement.pauseMan.paused && !playerMovement.playerDead)
+        if (!Pause.paused && !playerMovement.playerDead)
         {
             if (Automatic)
             {

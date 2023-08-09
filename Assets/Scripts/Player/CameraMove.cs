@@ -26,7 +26,7 @@ public class CameraMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!pauseManager.paused)
+        if(!Pause.paused)
         {
             float mouseX = Input.GetAxisRaw("Mouse X") * Time.fixedDeltaTime * sensX;
             float mouseY = Input.GetAxisRaw("Mouse Y") * Time.fixedDeltaTime * sensY;

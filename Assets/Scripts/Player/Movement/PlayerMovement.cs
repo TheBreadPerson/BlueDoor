@@ -164,19 +164,19 @@ public class PlayerMovement : MonoBehaviour
 
 
         // DASH
-        if ((!isGrounded && Input.GetKeyDown(dashKey) && !dashed) && !pauseMan.paused)
+        if ((!isGrounded && Input.GetKeyDown(dashKey) && !dashed) && !Pause.paused)
         {
             dashed = true;
             aSource.PlayOneShot(dashClip, .5f);
         }
 
-        if ((dashTimer < dashDuration) && dashed && !pauseMan.paused && !wallrunning)
+        if ((dashTimer < dashDuration) && dashed && !Pause.paused && !wallrunning)
         {
             Dash();
         }
 
         // WEAPON SWITCHING
-        if(!pauseMan.paused)
+        if(!Pause.paused)
         {
             SwitchWeapon();
             StartCoroutine(GunRustle());

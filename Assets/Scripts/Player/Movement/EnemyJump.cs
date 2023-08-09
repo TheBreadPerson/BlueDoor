@@ -37,6 +37,7 @@ public class EnemyJump : MonoBehaviour
     [Space]
     public bool dashed;
     public GameObject xPrompt;
+    public GameObject meterGlow;
     public TrailRenderer line;
     public float meterSubtractSlowness;
     public float killsNeeded;
@@ -58,6 +59,7 @@ public class EnemyJump : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        meterGlow.SetActive(canDash);
         if(enemiesKilled > killsNeeded) enemiesKilled = killsNeeded;
         // START DASH TIMER
         if(canDash && dashed)

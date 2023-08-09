@@ -101,7 +101,7 @@ public class Enemy : MonoBehaviour
             canShoot = false;
         }
 
-        if (Physics.Raycast(transform.position, playerDir, out hit, shootRange, playerLayer) && canShoot && !isDead)
+        if (Physics.Raycast(transform.position, playerDir, out hit, shootRange, playerLayer) && canShoot && !isDead && !Pause.paused)
         {
             if (hit.transform.CompareTag("Player") && hasAmmo && !playerM.playerDead)
             {

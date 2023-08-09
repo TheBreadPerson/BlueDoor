@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Pause : MonoBehaviour
 {
-    public bool paused;
+    public static bool paused;
     public float pauseVolume = -40f;
     public PlayerMovement pm;
     public Slider masterSlider, effectsSlider, playerSlider, musicSlider, fovSlider, sensSlider;

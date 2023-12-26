@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    float one = 1f;
     [HideInInspector] public Gun gun;
     float timer;
     [Header("Movement")]
@@ -144,7 +145,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(MoveSpeed + " desired " + desiredMoveSpeed + " " + state);
         dashFov = currentCamFov + 20f;
         // HEALTH 
         healthSlider.value = playerHealth;
@@ -203,7 +203,6 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-        
 
         // SPEED FOV
         //if(!wallrunning)

@@ -44,7 +44,6 @@ public class Pause : MonoBehaviour
         }
         else
         {
-            Time.timeScale = 1f;
             master.SetFloat("Volume", masterSlider.value);
             effectsMixer.audioMixer.SetFloat("EffectsVolume", effectsSlider.value);
             playerMixer.audioMixer.SetFloat("PlayerVolume", playerSlider.value);
@@ -64,6 +63,7 @@ public class Pause : MonoBehaviour
 
     public void ResumeGame()
     {
+        Time.timeScale = 1f;
         paused = false;
         Cursor.lockState = CursorLockMode.Locked;
         pm.Cam.GetComponent<Camera>().fieldOfView = fovSlider.value;

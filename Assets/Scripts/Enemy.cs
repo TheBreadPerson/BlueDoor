@@ -76,14 +76,12 @@ public class Enemy : MonoBehaviour
             transform.LookAt(player.position);
             if (distance >= stopDistance)
             {
-                agent.isStopped = false;
-                agent.SetDestination(player.position);
-                anim.SetBool("Walking", true);
+                //agent.isStopped = false;
+                //agent.SetDestination(player.position);
             }
             else
             {
-                agent.isStopped = true;
-                anim.SetBool("Walking", false);
+                //agent.isStopped = true;
             }
         }
 
@@ -184,6 +182,10 @@ public class Enemy : MonoBehaviour
     }
     public void Death()
     {
+        if(!isDead)
+        {
+            EnemyKillManager.enemiesKilled++;
+        }
         if(swapDeadBody && fractured != null && normal != null)
         {
             normal.SetActive(false);
